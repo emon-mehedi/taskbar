@@ -15,6 +15,8 @@ const statBtn = document.getElementById("stat");
 const header = document.querySelector("h2");
 const list = document.querySelector("ul");
 
+const anyBtn=document.querySelectorAll("button");
+
 const tasks = [
   {
     id: 1,
@@ -59,26 +61,36 @@ function nameCase(title) {
 function isIinputValid() {
   userInput = nameCase(input.value.trim());
   if (userInput === "") {
-    header.innerText="Enter valid title";
+    header.innerText = "Enter valid title";
     return false
   }
   return true
 }
 
 
+function findDuplicate() {
+  return tasks.find(task => task.title === userInput)
+}
+
+function filterTasks(key,inputData){
+  return tasks.filter(task=>task[key]===inputData)
+}
 
 
 
+function updateUI(task) {
+  const icon = task.completed ? "✔" : "✖"
+  list.innerHTML = `<li>${icon} ${task.title}`
+}
 
 
+function clear(){
+  input.value=""
+}
 
 
-//update 
-// ✔ Learn Arrays
-// ✖ Finish Expense Tracker
-// ✔ Exercise
-// ✖ Read Clean Code
-
+//clear inputs
+anyBtn.forEach(button=>button.addEventListener("click",clear))
 
 
 //1. Add Task
@@ -170,7 +182,7 @@ azBtn.addEventListener("click", azTasks);
 
 function azTasks() {
   /**
-   * -f sort tasks (new)
+   * -m sort tasks
    * -f update ui
    */
 }
@@ -181,7 +193,7 @@ zaBtn.addEventListener("click", zaTasks);
 
 function zaTasks() {
   /**
-   * -f sort tasks
+   * -m sort tasks
    * -f update ui
    */
 }
@@ -193,6 +205,6 @@ statBtn.addEventListener("click", showStats);
 
 function showStats() {
   /**
-   * -m show number of total taska, completed tasks, pending tasks
+   * -m show number of total tasks, completed tasks, pending tasks
    */
 }

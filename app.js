@@ -6,11 +6,14 @@ const searchBtn = document.getElementById("search");
 const deleteBtn = document.getElementById("delete");
 const completeBtn = document.getElementById("complete");
 const allBtn = document.getElementById("all");
-const completedBtn=document.getElementById("completed");
+const completedBtn = document.getElementById("completed");
 const pendingBtn = document.getElementById("pending");
 const azBtn = document.getElementById("az");
 const zaBtn = document.getElementById("za");
 const statBtn = document.getElementById("stat");
+
+const header = document.querySelector("h2");
+const list = document.querySelector("ul");
 
 const tasks = [
   {
@@ -39,11 +42,31 @@ const tasks = [
 
 
 //global vaiables
-
+let userInput;
 
 
 
 //common functions
+function nameCase(title) {
+  return title
+    .split(" ")
+    .map(word =>
+      word.slice(0, 1).toUpperCase() + word.slice(1).toLowerCase()
+    )
+    .join(" ")
+}
+
+function isIinputValid() {
+  userInput = nameCase(input.value.trim());
+  if (userInput === "") {
+
+  }
+}
+
+
+
+
+
 
 //update 
 // ✔ Learn Arrays
@@ -54,60 +77,60 @@ const tasks = [
 
 
 //1. Add Task
-addBtn.addEventListener("click",addTask);
+addBtn.addEventListener("click", addTask);
 
-function addTask(){
-/**
- * -f validate input (new)
- * -f find duplicates (new)
- * -m add task as cpmpleted:false
- * -f update ui (new)
- * -f clear input when clicked any button (new)
- */
+function addTask() {
+  /**
+   * -f validate input (new)
+   * -f find duplicates (new)
+   * -m add task as cpmpleted:false
+   * -f update ui (new)
+   * -f clear input when clicked any button (new)
+   */
 }
 
 
 
 //2. Search Task
-searchBtn.addEventListener("click",searchTask);
+searchBtn.addEventListener("click", searchTask);
 
-function searchTask(){
-/**
- * -f validate input
- * -f find duplicates
- * -f update ui
- */
+function searchTask() {
+  /**
+   * -f validate input
+   * -f find duplicates
+   * -f update ui
+   */
 }
 
 
 //3. Delete Task
-deleteBtn.addEventListener("click",deleteTask);
+deleteBtn.addEventListener("click", deleteTask);
 
-function deleteTask(){
-/**
- * -f validate input
- * -f find duplicate
- * -m delete tasks
- * -f update ui
- */
+function deleteTask() {
+  /**
+   * -f validate input
+   * -f find duplicate
+   * -m delete tasks
+   * -f update ui
+   */
 }
 
 //4. Complete Task ⭐
-completeBtn.addEventListener("click",completeTasks);
+completeBtn.addEventListener("click", completeTasks);
 
-function completeTasks(){
-/**
- * -f find task
- * -m make tast completed
- * -f update ui
- */
+function completeTasks() {
+  /**
+   * -f find task
+   * -m make tast completed
+   * -f update ui
+   */
 }
 
 
 //5. Show All
-allBtn.addEventListener("click",showAllTasks);
+allBtn.addEventListener("click", showAllTasks);
 
-function showAllTasks(){
+function showAllTasks() {
   /**
  * -f filter tasks (new)
  * -f update ui
@@ -116,9 +139,9 @@ function showAllTasks(){
 
 
 //6. Completed
-completedBtn.addEventListener("click",completedTasks);
+completedBtn.addEventListener("click", completedTasks);
 
-function completedTasks(){
+function completedTasks() {
   /**
  * -f filter tasks
  * -f update ui
@@ -127,44 +150,44 @@ function completedTasks(){
 
 
 //7. 7. Pending
-pendingBtn.addEventListener("click",pendingTasks);
+pendingBtn.addEventListener("click", pendingTasks);
 
-function pendingTasks(){
-/**
- * -f filter tasks
- * -f update ui
- */
+function pendingTasks() {
+  /**
+   * -f filter tasks
+   * -f update ui
+   */
 }
 
 
 //8. A → Z
-azBtn.addEventListener("click",azTasks);
+azBtn.addEventListener("click", azTasks);
 
-function azTasks(){
-/**
- * -f sort tasks (new)
- * -f update ui
- */
+function azTasks() {
+  /**
+   * -f sort tasks (new)
+   * -f update ui
+   */
 }
 
 
 //9. Z → A
-zaBtn.addEventListener("click",zaTasks);
+zaBtn.addEventListener("click", zaTasks);
 
-function zaTasks(){
-/**
- * -f sort tasks
- * -f update ui
- */
+function zaTasks() {
+  /**
+   * -f sort tasks
+   * -f update ui
+   */
 }
 
 
 
 //10. Statistics
-statBtn.addEventListener("click",showStats);
+statBtn.addEventListener("click", showStats);
 
-function showStats(){
-/**
- * -m show number of total taska, completed tasks, pending tasks
- */
+function showStats() {
+  /**
+   * -m show number of total taska, completed tasks, pending tasks
+   */
 }

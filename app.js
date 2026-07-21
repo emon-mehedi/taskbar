@@ -15,7 +15,7 @@ const statBtn = document.getElementById("stat");
 const header = document.querySelector("h2");
 const list = document.querySelector("ul");
 
-const anyBtn=document.querySelectorAll("button");
+const anyBtn = document.querySelectorAll("button");
 
 const tasks = [
   {
@@ -58,7 +58,9 @@ function nameCase(title) {
     .join(" ")
 }
 
+
 function isIinputValid() {
+
   userInput = nameCase(input.value.trim());
   if (userInput === "") {
     header.innerText = "Enter valid title";
@@ -72,25 +74,34 @@ function findDuplicate() {
   return tasks.find(task => task.title === userInput)
 }
 
-function filterTasks(key,inputData){
-  return tasks.filter(task=>task[key]===inputData)
+function filterTasks(boolean) {
+  return tasks.filter(task => task.completed === boolean)
 }
 
 
 
-function updateUI(task) {
-  const icon = task.completed ? "✔" : "✖"
-  list.innerHTML = `<li>${icon} ${task.title}`
+function updateUI(task, message) {
+  if (task) {
+    list.innerText="";
+    task
+    .map(each =>{
+      const marker = each.completed ? "✔" : "✖";  
+      list.innerHTML += `<li>${marker} ${each.title}`;
+    })
+    .join("")
+  }
+
+  header.innerText = `${message}`
 }
 
 
-function clear(){
-  input.value=""
+function clear() {
+  input.value = ""
 }
 
 
 //clear inputs
-anyBtn.forEach(button=>button.addEventListener("click",clear))
+
 
 
 //1. Add Task
@@ -104,6 +115,21 @@ function addTask() {
    * -f update ui (new)
    * -f clear input when clicked any button (new)
    */
+  if (!isIinputValid()) return;
+
+  let newTask = findDuplicate();
+  if (newTask) {
+    updateUI([newTask], "Task exists");
+    return
+  }
+
+  newTask = {
+    id: tasks.length + 1,
+    title: userInput,
+    completed: false
+  }
+  tasks.push(newTask);
+  updateUI([newTask], "Task added successfully");
 }
 
 
@@ -117,7 +143,17 @@ function searchTask() {
    * -f find duplicates
    * -f update ui
    */
+  if (!isIinputValid()) return;
+
+  const task = findDuplicate();
+  if (!task) {
+    updateUI(undefined, "Task not found");
+    return
+  }
+
+  updateUI([task], "Task found");
 }
+
 
 
 //3. Delete Task
@@ -130,9 +166,20 @@ function deleteTask() {
    * -m delete tasks
    * -f update ui
    */
+  if (!isIinputValid()) return;
+
+  const task = findDuplicate();
+  if (!task) {
+    updateUI(undefined, "Task not found")
+    return
+  }
+
+  updateUI([task], "Task deleted successfully");
 }
 
-//4. Complete Task ⭐
+
+
+//4. Complete Task 
 completeBtn.addEventListener("click", completeTasks);
 
 function completeTasks() {
@@ -141,7 +188,17 @@ function completeTasks() {
    * -m make tast completed
    * -f update ui
    */
+  const task = findDuplicate();
+  if (!task) {
+    updateUI(undefined, "Task not found");
+    return
+  }
+
+  const index = tasks.indexOf(task);
+  tasks[index].completed = true;
+  updateUI([task], "Task completed")
 }
+
 
 
 //5. Show All
@@ -149,10 +206,11 @@ allBtn.addEventListener("click", showAllTasks);
 
 function showAllTasks() {
   /**
- * -f filter tasks (new)
  * -f update ui
  */
+  updateUI(tasks, "All tasks:")
 }
+
 
 
 //6. Completed
@@ -163,7 +221,10 @@ function completedTasks() {
  * -f filter tasks
  * -f update ui
  */
+  const compTasks = filterTasks(true);
+  updateUI(compTasks, "Completed tasks:")
 }
+
 
 
 //7. 7. Pending
@@ -174,7 +235,10 @@ function pendingTasks() {
    * -f filter tasks
    * -f update ui
    */
+  let pendTasks = filterTasks(false);
+  updateUI(pendTasks, "Pending tasks:")
 }
+
 
 
 //8. A → Z
@@ -185,7 +249,13 @@ function azTasks() {
    * -m sort tasks
    * -f update ui
    */
+  const sortedTasks = tasks
+    .slice()
+    .sort((a, b) => a.title.localeCompare(b.title))
+
+  updateUI(sortedTasks, "Tasks A -> Z:")
 }
+
 
 
 //9. Z → A
@@ -196,6 +266,12 @@ function zaTasks() {
    * -m sort tasks
    * -f update ui
    */
+  let sortedTasks = tasks
+    .slice()
+    .sort((a, b) => b.title.localeCompare(a.title))
+
+  updateUI(sortedTasks, "Tasks Z -> A:")
+
 }
 
 
@@ -208,3 +284,9 @@ function showStats() {
    * -m show number of total tasks, completed tasks, pending tasks
    */
 }
+
+
+
+
+
+anyBtn.forEach(button => button.addEventListener("click", clear))

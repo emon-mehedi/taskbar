@@ -59,9 +59,14 @@ function nameCase(title) {
 function isIinputValid() {
   userInput = nameCase(input.value.trim());
   if (userInput === "") {
-
+    header.innerText="Enter valid title";
+    return false
   }
+  return true
 }
+
+
+
 
 
 
